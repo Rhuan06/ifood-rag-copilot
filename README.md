@@ -159,21 +159,33 @@ pip install fastapi uvicorn fastembed faiss-cpu numpy google-genai python-dotenv
 
 ### 4. Configurar a API do Gemini
 
-Criar um arquivo `.env` na raiz do projeto:
+Crie um arquivo `.env` na raiz do projeto:
 
 ```env
 GEMINI_API_KEY=sua_chave_aqui
 ```
 
-**Importante:** nunca compartilhe sua chave de API. Mantenha o `.env` fora do controle de versão utilizando o `.gitignore`.
+**Importante:** nunca compartilhe sua chave de API. O arquivo `.env` está protegido pelo `.gitignore` e não deve ser enviado ao GitHub.
 
-### 5. Executar a ingestão
+### 5. Gerar a base vetorial
+
+Os arquivos `index.faiss` e `chunks.json` são gerados localmente e não são versionados no Git, pois a pasta `vectorstore/` está incluída no `.gitignore`.
+
+Após clonar o projeto, execute:
 
 ```bash
 python app/ingest.py
 ```
 
-Essa etapa processa os documentos, gera os embeddings e constrói o índice vetorial.
+Esse processo realiza:
+
+- Leitura dos documentos Markdown em `data/`.
+- Divisão do conteúdo em trechos (*chunks*).
+- Geração dos embeddings com FastEmbed.
+- Normalização e indexação dos vetores no FAISS.
+- Persistência dos documentos em `chunks.json` e do índice em `index.faiss`.
+
+**Importante:** sempre que os documentos da base de conhecimento forem adicionados ou modificados, execute novamente a ingestão para atualizar o índice vetorial.
 
 ### 6. Iniciar o copiloto
 
@@ -181,7 +193,7 @@ Essa etapa processa os documentos, gera os embeddings e constrói o índice veto
 python app/rag.py
 ```
 
-Após a inicialização, o sistema estará disponível no terminal para receber perguntas sobre as políticas documentadas.
+Após a inicialização, o sistema estará disponível no terminal para receber perguntas sobre os conteúdos documentados.
 
 ## 📁 Estrutura do Projeto
 
@@ -228,7 +240,7 @@ O projeto também explora como arquiteturas RAG podem ser aplicadas em cenários
 ---
 
 <p align="center">
-  Desenvolvido por <strong>Rhuan Silva de Oliveira</strong>
+  Desenvolvido por <strong>Rhuan Oliveira</strong>
   <br />
   <sub>Engenharia de Software • Python • Inteligência Artificial</sub>
 </p>
