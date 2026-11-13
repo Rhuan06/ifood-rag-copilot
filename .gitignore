@@ -1,18 +1,28 @@
-
+# Variáveis de ambiente
 .env
+.env.*
+!.env.example
 
-
+# Ambientes virtuais
 venv/
 env/
+.venv/
 
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
 
-
+# Arquivos gerados pelo RAG
 vectorstore/
 
+# Editores
 .vscode/
 .idea/
+
+# Sistema operacional
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
